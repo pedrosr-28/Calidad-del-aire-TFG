@@ -7,6 +7,8 @@ import time
 import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 def redimensionar_cv2(img):
     height, width = img.shape[:2]
@@ -133,13 +135,15 @@ for contaminante in contaminantes:
                 imagen_hora = os.path.join(imagenes_dir, f"{contaminante.upper()}_{ciudad}_{hora}_isolines.png")
                 if os.path.exists(imagen_hora):
                     timestamp = os.path.getmtime(imagen_hora)
-                    fecha = datetime.datetime.fromtimestamp(timestamp).replace(minute=0, second=0, microsecond=0)
-                    fecha_str = fecha.strftime("%Y-%m-%d %H:%M")
-                    fecha_text = f"Fecha: {fecha_str}"
+                    fecha_utc = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+                    fecha_es = fecha_utc.astimezone(ZoneInfo("Europe/Madrid"))
+                    fecha_es = fecha_es.replace(minute=0, second=0, microsecond=0)
+                    fecha_str = fecha_es.strftime("%Y-%m-%d %H:%M")
+                    fecha_text = f"{fecha_str}"
 
                     fecha_x = 90
                     fecha_y = 70
-                    cv2.putText(img, fecha_text, (fecha_x, fecha_y), font, 1, color, 5, line_type)
+                    cv2.putText(img, fecha_text, (fecha_x, fecha_y), font, 1, color, 3, line_type)
                     print(f"Fecha agregada: {fecha_text}")
                 
 
