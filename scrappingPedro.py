@@ -150,7 +150,7 @@ def obtener_datos_openaq(archivo_txt):
             time.sleep(20)
         else:
             print(f"Error al consultar paises: {response.status_code}")
-            sys.exit(1)
+            break  
 
     datos_en_memoria1 = {}
 
@@ -247,6 +247,8 @@ def obtener_datos_openaq(archivo_txt):
                 for sensor in sensores
             ]
 
+            umbral_antiguedad = timedelta(days=2)
+
             # Obtener datos de contaminantes (ultimos valores)
             url = f"https://api.openaq.org/v3/locations/{id}/latest?limit=100&page=1"
             response = requests.get(url, headers=headers)
@@ -258,12 +260,16 @@ def obtener_datos_openaq(archivo_txt):
                 results = data.get('results', [])
                 if results:
                     for result in results:
-                        value_obj = result.get('value')
-                        value_id = result.get('sensorsId')
-                        results_pollutants.append({
-                            "value": value_obj,
-                            "id": value_id
-                        })
+                        datetime_str = result.get('datetime', {}).get('utc')
+                        if datetime_str:
+                            # Convertir a objeto datetime
+                            dt_utc = datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%SZ")
+                            # Comparar con el umbral
+                            if datetime.utcnow() - dt_utc <= umbral_antiguedad:
+                                results_pollutants.append({
+                                    "value": result.get('value'),
+                                    "id": result.get('sensorsId')
+                                })
 
             for pollutant in results_pollutants:
                 pollutant_id = pollutant['id']
