@@ -7,9 +7,9 @@ from datetime import datetime
 from influxdb_client import InfluxDBClient
 
 # Configuraciones de InfluxDB
-INFLUXDB_URL = "http://ip:puerto"
-INFLUXDB_TOKEN = ""
-INFLUXDB_ORG = "qartia"
+INFLUXDB_URL="http://localhost:8086"
+INFLUXDB_TOKEN="tu_token_super_secreto"
+INFLUXDB_ORG="mi_organizacion"
 client = InfluxDBClient(url=INFLUXDB_URL, token=INFLUXDB_TOKEN, org=INFLUXDB_ORG)
 
 LOG_FILE_PATH = "/etc/scraping/aqiCalculation/datos.log"
