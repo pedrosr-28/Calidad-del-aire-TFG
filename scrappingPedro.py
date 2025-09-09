@@ -18,8 +18,8 @@ def log(msg):
 
 
 # Configuracion del cliente MQTT
-mqtt_broker = "127.0.0.1"
-mqtt_port = 1883
+mqtt_broker = "ipDelBroker"
+mqtt_port = numeroDePuerto
 mqtt_client = mqtt.Client()
 
 
@@ -92,7 +92,7 @@ def obtener_datos_openaq(archivo_txt):
     # API Key y headers
     headers = {
         'accept': 'application/json',
-        'X-API-Key': '449e1eb46e61ad3b89f894a1d1fd0032ffaaa1a09cbb24aed6f74ae8ae4960dd'
+        'X-API-Key': 'APIdeOpenAQ'
     }
 
     # Funcion para cargar ciudades y paises desde un archivo txt
@@ -495,7 +495,7 @@ def obtener_datos_aqi_in(archivo_txt):
 
 
 def obtener_datos_aqicn(archivo_txt):
-    API_KEY = "49a5284824b622ea2042ec36626407878f67af70"
+    API_KEY = "APIaqicn"
 
     def cargar_diccionario_entre_openaq(archivo_txt):
         contenido_bloque = []
