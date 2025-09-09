@@ -7,7 +7,7 @@ from datetime import datetime
 from influxdb_client import InfluxDBClient
 
 # Configuraciones de InfluxDB
-INFLUXDB_URL = "http://127.0.0.1:8086"
+INFLUXDB_URL = "http://ip:puerto"
 INFLUXDB_TOKEN = ""
 INFLUXDB_ORG = "qartia"
 client = InfluxDBClient(url=INFLUXDB_URL, token=INFLUXDB_TOKEN, org=INFLUXDB_ORG)
