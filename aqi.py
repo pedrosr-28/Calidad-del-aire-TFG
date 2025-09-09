@@ -337,7 +337,7 @@ if __name__ == "__main__":
                 print(error_msg, file=sys.stderr)
                 sys.stderr.flush()
 
-            # Imprimir la mÃ©trica procesada en el STDOUT para que Telegraf la procese
+            # Imprimir la metrica procesada en el STDOUT para que Telegraf la procese
             print(output_line)
             sys.stdout.flush()
 
